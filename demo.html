@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const _toString = Object.prototype.toString
+    let obj = [{a:1}]
+    function isObject(val) {
+      return _toString.call(val) === '[object Array]'
+    }
+    console.log(isObject(obj));
+  </script>
+</body>
+</html>

@@ -23,3 +23,6 @@
   float: right;
   margin-top: 5px;
 }
+.todo-footer .current{
+  border: 1px solid #bbb;
+}

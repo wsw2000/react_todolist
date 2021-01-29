@@ -6,8 +6,8 @@ import Footer from '../src/components/Footer'
 
 export default class App extends Component {
   state ={
-    todos: [
-    ]
+    todos: [],
+    tab_index:0
   }
   //添加todo
   addTodo = (todoName) =>{
@@ -63,24 +63,28 @@ export default class App extends Component {
       const todos = localStorage.getItem('react-todolist') || []
       if(todos.length == 0) return
       this.setState({todos : JSON.parse(todos)})
-    },1000)
+    },500)
   }
   getSnapshotBeforeUpdate(prevProps, prevState) {
     //我们是否要添加新的 items 到列表?
     // 捕捉滚动位置，以便我们可以稍后调整滚动.
     return this.state.todos
   }
-  更新的生命周期
+  //更新的生命周期
   componentDidUpdate(prevProps, prevState,todos){
     localStorage.setItem('react-todolist',JSON.stringify(todos))
   }
+  changeIndex = (tab_index) =>{
+    this.setState({tab_index})
+  }
   render() {
+    const {todos,tab_index} = this.state
     return (
       <div className="todo-container">
         <div className="todo-wrap">
           <Header addTodo={this.addTodo}/>
-          <List todos={this.state.todos} deleteTodo={this.deleteTodo} updateTodo={this.updateTodo}/>
-          <Footer todos={this.state.todos} clearDoneTodo={this.clearDoneTodo} allChangeD={this.allChangeD}/>
+          <List todos={todos} tab_index={tab_index} deleteTodo={this.deleteTodo} updateTodo={this.updateTodo}/>
+          <Footer todos={todos} clearDoneTodo={this.clearDoneTodo} allChangeD={this.allChangeD} changeIndex={this.changeIndex} tab_index={tab_index}/>
         </div>
       </div>
     )
