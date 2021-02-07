@@ -4,9 +4,10 @@ import {
   addTodo,
   delTodo,
   updateTodo,
-  clearTodo,
-  allChange
+  allChange,
+  addTodoAsync
 } from '../../redux/actions/todolist'
+import ClearDone from '../clearDone';
 
 class TodoList extends Component {
   state = {
@@ -26,7 +27,8 @@ class TodoList extends Component {
       return
     }  //13是enter的标识符
     const todoObj = { id: Date.now(), name: target.value, done: false }
-    this.props.addTodo(todoObj)
+    // this.props.addTodo(todoObj)
+    this.props.addTodoAsync(todoObj,200)  //异步rudux  在actions添加
     target.value = ''
   }
   //删除todo
@@ -46,6 +48,7 @@ class TodoList extends Component {
   changeIndex = (tab_index) => {
     this.setState({ tab_index })
   }
+
   filter_TodoLists = () =>{
     switch (this.state.tab_index) {
       case 1 : return this.props.todolists.filter(item => !item.done);
@@ -63,7 +66,7 @@ class TodoList extends Component {
   }
   render() {
     const { tab_index } = this.state
-    const { todolists,clearTodo,allChange } = this.props
+    const { todolists,allChange } = this.props
     const doneLenth = todolists.reduce((pre,current) => pre + (current.done ? 1 : 0) ,0)  //已完成的
     return (
       <div className="todo-container">
@@ -121,8 +124,7 @@ class TodoList extends Component {
                 )
               })
             }
-            <button className="btn btn1 btn-danger"
-              onClick={clearTodo}>清除已完成任务</button>
+            <ClearDone></ClearDone>
           </div>
         </div>
       </div>
@@ -138,7 +140,7 @@ export default connect(
     }
   },
   //简写的action, 默认dispatch
-  { addTodo, delTodo, updateTodo, clearTodo,allChange }
+  { addTodo, delTodo, updateTodo, allChange,addTodoAsync}
 )(TodoList)
 
 

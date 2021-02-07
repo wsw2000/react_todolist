@@ -6,7 +6,8 @@ import {
   ALL_CHANGE
 } from '../constant';
 
-const todos = JSON.parse(localStorage.getItem('react-todolist')) || []
+let todos = JSON.parse(localStorage.getItem('react-todolist')) || []
+
 
 const todolist = ( preData = todos,action ) =>{
   const { type, data} = action
